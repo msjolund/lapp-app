@@ -1,0 +1,5 @@
+# This file contains Application Level configuration for ESN Planet.
+
+# The values specified under the application section are available in your application by using the Config.myKey
+application:
+    myKey : myValue

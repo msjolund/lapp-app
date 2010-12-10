@@ -1,0 +1,80 @@
+/* note component CSS resource */
+
+.note {
+    display: block;
+    color: #141414;
+    font-family: SFCartoonistHandRegular, Comic sans;
+    float: left;
+    font-size: 18px;
+    padding: 0 0px 3px;
+	background: rgb(0.10, 0.10, 0.10);
+	background: rgba(0, 0, 0, 0.10);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000010, endColorstr=#00000010);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000010, endColorstr=#00000010)";
+
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+.note.ui-state-disabled {
+    opacity: 1;
+}
+
+.note .estimate {
+    float: right;
+    padding: 10px;
+    cursor: default;
+}
+.note .estimate span {
+    width: 30px;
+}
+.note .estimate input {
+    width: 30px;
+    background: transparent;
+    text-align: right;
+    padding: 0;
+    font-family: SFCartoonistHandRegular, Comic sans;
+    font-size: 18px;
+    color: #141414;
+    border: 1px solid #999;
+}
+
+.note .estimate input:disabled {
+    border: none;
+}
+.note .inner, .stack {
+    padding: 10px;
+    width: 170px;
+    height: 100px;
+    background-color: #f3f2b1;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f3c6', endColorstr='#f6f0a7');
+    background: -webkit-gradient(linear, left top, left bottom, from(#f7f3c6), to(#f6f0a7));
+    background: -moz-linear-gradient(top,  #f7f3c6,  #f6f0a7);
+}
+
+.note.edit .inner .body {
+    border: 1px solid #999;
+    padding: 3px;
+    min-height: 30px;
+}
+
+.stack {
+    margin: 10px 0;
+    border-right: 4px solid #e7e6a8;
+    border-bottom: 7px solid #bfbe8f;
+    float: left;
+    padding: 0;
+    width: auto;
+    height: auto;
+}
+
+.stack .note {
+    padding: 0;
+}
+.note .inner textarea {
+    background: transparent;
+    border: 1px solid #999;
+    width: 128px;
+    height: 50px;
+}

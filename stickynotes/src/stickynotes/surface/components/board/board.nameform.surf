@@ -1,0 +1,7 @@
+{exportToJs}
+<div class="nameform">
+    <form action="{block action}{urlaction board.column_add($board)}{/block}" method="post">
+        <input type="text" name="name" value="New column" />
+        <input type="submit" value="Add" />
+    </form>
+</div>

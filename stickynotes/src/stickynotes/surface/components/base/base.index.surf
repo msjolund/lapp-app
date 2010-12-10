@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {block head}
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            {bundle}
+                {includeCss("/*/*.css")}
+                {includeCss("/base/resources/flick/jquery-ui-1.8.6.custom.css")}
+                {includeCss("/base/resources/fonts/stylesheet.css")}
+            {/bundle}
+            <title>{block title}Agile Board{/block}</title>
+        {/block}
+    </head>
+    <body>
+        <div class="header clearfix">
+            <span class="logo">Agile Board</span>
+            <span class="user">
+                {if $user|isset()}
+                    <span style="color: #aaa">Signed in as: </span>{$user.username} | <a href="{urlaction user.logout()}">Sign out</a>
+                {else}
+                    Not signed in <a href="{urlaction main.index()}">Sign in</a>
+                {/if}
+            </span>
+        </div>
+        <div class="main_content">
+            {block main}{/block}
+        </div>
+        {block footer}
+            {bundle}
+                {* Adds javascripts from the Surface framework, and also all modifier javascripts. *}
+                {includeJs("/surfaceframework/*.js")}
+                {* The order of the following two imports are important. */*.js should be imported before */*.surf to prevent override of the preparsed files. *}
+                {includeJs("/*/*.js")}
+                {includeJs("/*/*.surf")}
+                {includeJs("/*/resources/*.js")}
+            {/bundle}
+            {render surfaceframework.index()}
+            {render orbit.index()}
+        {/block}
+    </body>
+</html>

@@ -1,0 +1,23 @@
+{extends base.index}
+{block main}
+    <div class="board_list centered_narrow">
+        <div class="boards">
+            <div class="add_form">
+                {use board.nameform()}
+                    {block action}{urlaction project.board_add({"id": 2772296566596173913})}{/block}
+                {/use}
+                <a class="btn_add marker" href="#add_board" title="Add board">+</a>
+            </div>
+            <h3>Boards</h3>
+            <div class="clear"></div>
+            <ul>
+                {for $board in $boards}
+                    {render project.board({"board": $board})}
+                {forelse}
+                    {render project.boardform()}
+                {/for}
+
+            </ul>
+        </div>
+    </div>
+{/block}

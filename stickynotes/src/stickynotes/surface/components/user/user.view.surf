@@ -1,0 +1,29 @@
+{extends base.index}
+
+{block main}
+<div style="font-size: 20px;">User details</div>
+
+<div style="width: 250px;">
+    {if $user|isset()}
+        <div>
+            <div style="float:left;">User ID</div>
+            <div style="float:right;">{$user.id}</div>
+            <div style="clear:both;"></div>
+        </div>
+        <div>
+            <div style="float:left;">Username</div>
+            <div style="float:right;">{$user.username}</div>
+            <div style="clear:both;"></div>
+        </div>
+        <div>
+            <div style="float:left;">Email</div>
+            <div style="float:right;">{$user.email}</div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <a href="{urlaction user.logout()}" onclick="user.facebookLogout(); return false;">Log out</a>
+    {elseif $errormsg|isset()}
+        <div>Error: {$errormsg}</div>
+    {/if}
+</div>
+{/block}

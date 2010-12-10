@@ -1,0 +1,30 @@
+<div style="width: 250px;">
+    <form action="{urlaction user.create()}" method="post">
+        <fieldset>
+            <div>
+                <div style="float:left;"><label for="cc_user_username">Username</label></div>
+                <div style="float:right;"><input tabindex="1" id="cc_user_username" style="" type="text" name="username" /></div>
+                <div style="clear:both;"></div>
+            </div>
+            <div>
+                <div style="float:left;"><label for="cc_user_password">Password</label></div>
+                <div style="float:right;"><input tabindex="2" id="cc_user_password" style="" type="password" name="password" /></div>
+                <div style="clear:both;"></div>
+            </div>
+            <div>
+                <div style="float:left;"><label for="cc_user_email">Email</label></div>
+                <div style="float:right;"><input tabindex="3" id="cc_user_email" style="" type="text" name="email" /></div>
+                <div style="clear:both;"></div>
+            </div>
+            <div>
+                <div style="float:left;"><input tabindex="5" type="reset" value="Clear" /></div>
+                <div style="float:right;"><input tabindex="4" type="submit" value="Register" /></div>
+                <div style="clear:both;"></div>
+            </div>
+            {* Replace this urlaction for where to redirect when user created successfully *}
+            <input type="hidden" name="urlok" value="{urlaction user.view()}">
+            {* Replace this urlaction for a link where to go when user creation fails (after error message is shown) *}
+            <input type="hidden" name="urlback" value="{urlaction user.register()}">
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,29 @@
+{exportToJs}
+<div class="note {if $editable|isset() && $editable}editable{/if}" style="{block style}{/block}}">
+    {if $loading|isset() && $loading}
+        <div class="inner">
+            Loading...
+        </div>
+    {else}
+        {surface id="note_"|concat($note.id|default("new"))}
+            {if $note|isset()}
+                <input type="hidden" name="id" value="{$note.id}">
+                <input type="hidden" name="column" value="{$note.columnId}">
+            {/if}
+            {if !$noEstimate|default(False)}
+                <div class="estimate">
+                    <input value="{$note.estimate|default(0)}" disabled="disabled" name="estimate" />h
+                </div>
+            {/if}
+            <div class="inner">
+                <div class="body">
+                    {if $note|isset()}
+                        {$note.body} {* FIXME: Don't raw this. Easy to insert scripts for other users *}
+                    {else}
+                        {$body|default("Double click to edit")}
+                    {/if}
+                </div>
+            </div>
+        {/surface}
+    {/if}
+</div>

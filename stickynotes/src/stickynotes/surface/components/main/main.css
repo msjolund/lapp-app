@@ -1,0 +1,75 @@
+.centered_narrow {
+    width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    border: 1px solid #999;
+    position: relative;
+}
+
+.account_form .panel {
+    display: none;
+    padding: 20px;
+}
+.account_form .panel.current {
+    display: block;
+}
+
+.account_form ul {
+    border-bottom: 1px solid #999;
+    height: 35px;
+    background: #EAEAEA;
+}
+
+.account_form ul li {
+    float: left;
+    border-right: 1px solid #999;
+    height: 35px;
+}
+
+
+
+.account_form ul li a {
+    text-decoration: none;
+    color: #2b2b2b;
+    float: left;
+    padding: 0 20px;
+    line-height: 35px;
+    height: 35px;
+}
+
+.account_form ul li.current a {
+    background: #fff;
+    padding-bottom: 1px;
+}
+
+.account_form input[type="text"], .account_form input[type="password"] {
+    margin-top: 10px;
+    width: 344px;
+}
+.account_form input[type="submit"] {
+    margin-top: 10px;
+    padding: 4px;
+}
+
+h2.welcome {
+    font-family: Georgia;
+    font-weight: normal;
+    font-size: 32px;
+    text-align: center;
+    padding-top: 20px;
+    text-shadow: 0 1px #daf8d7;
+}
+
+p.welcome {
+    text-align: center;
+    font-family: Arial;
+    font-size: 14px;
+    padding-top: 5px;
+    line-height: 20px;
+}
+
+.account_form .note {
+    position: absolute;
+    bottom: -80px;
+    right: -100px;
+}

@@ -1,0 +1,7 @@
+{exportToJs}
+<li class="name_form">
+        <form action="{urlaction project.board_add({"id": 2772296566596173913})}" method="post">
+            <input type="text" name="name" value="New board" />
+            <input type="submit" value="Add" />
+        </form>
+</li>

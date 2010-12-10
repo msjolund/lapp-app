@@ -1,0 +1,170 @@
+/* Reset CSS start */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+* {
+    outline-style:none;
+    outline-width:0;
+}
+
+body {
+    line-height: 1;
+    overflow-x: hidden;
+    background-color: #c0eabc;
+    color: #141414;
+    font-family: Arial;
+    font-size: 12px;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* Reset CSS end */
+
+.clear {
+    clear: both;
+    height: 0;
+}
+
+/* float clearing for IE6 */
+* html .clearfix {
+  height: 1%;
+  overflow: visible;
+}
+
+/* float clearing for IE7 */
+*+html .clearfix {
+  min-height: 1%;
+}
+
+/* float clearing for everyone else */
+.clearfix:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  font-size: 0;
+}
+
+.main_content {
+    padding: 20px;
+}
+
+.alpha60 {
+	/* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(0, 0, 0);
+	/* RGBa with 0.6 opacity */
+	background: rgba(0, 0, 0, 0.6);
+	/* For IE 5.5 - 7*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+.rounded {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+.header {
+    line-height: 38px;
+    background: #4b4b4b;
+    color: #fff;
+    border-bottom: 1px solid #bbb;
+}
+.header .user {
+    float: right;
+    padding: 0 20px;
+}
+.header .user a {
+    color: #fff;
+}
+
+.header .logo {
+    padding: 0 20px;
+    float: left;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 6px;
+    border: 1px solid #8aa487;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+.placeholder {
+    color: #888;
+}
+
+.usermessage {
+    border: 1px solid #fd316f;
+    background: #ff96b6;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.usermessage.success {
+    background-color: #c0eabc;
+    border: 1px solid #7d9a77;
+    color: #3c4739;
+}
+
+.padder {
+    padding: 10px;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.relative {
+    position: relative;
+}

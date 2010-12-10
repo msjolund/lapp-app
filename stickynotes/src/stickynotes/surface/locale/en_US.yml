@@ -1,0 +1,6 @@
+locale.date: "%Y-%m-%d"
+locale.datetime: "%Y-%m-%d %H:%M:%S"
+locale.time: "%H:%M:%S"
+locale.numeric.decimal_point: '.'
+locale.numeric.thousands_sep: ','
+locale.numeric.grouping: 3

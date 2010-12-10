@@ -1,0 +1,76 @@
+/* project component CSS resource */
+.board_list {
+    
+}
+
+.boards {
+    padding-bottom: 10px;
+}
+
+.boards h3 {
+    padding: 10px;
+    font-size: 20px;
+    line-height: 22px;
+    color: #444;
+    font-family: Georgia;
+    font-weight: normal;
+}
+
+.boards ul li {
+    border-top: 1px solid #eaeaea;
+    padding: 0 10px;
+    line-height: 30px;
+}
+
+.boards ul li a {
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+.boards ul li.hover {
+   background-color: #f4f4f4;
+}
+
+.boards {
+
+}
+
+.boards .add_form {
+    float: right;
+    margin: 10px;
+}
+
+.board_form {
+    padding: 10px;
+}
+
+.board_form input[type=text] {
+    width: 300px;
+}
+
+.board_form input[type=submit] {
+    float: right;
+    padding: 3px;
+}
+
+.btn_remove {
+    display: none;
+    margin: 4px 0;
+    border: 1px solid #aaa;
+    line-height: 14px;
+    width: 12px;
+    font-size: 18px;
+    font-family: Arial;
+    font-weight: normal;
+    text-align: center;
+    padding: 0 2px 3px;
+    text-decoration: none;
+}
+.btn_remove:hover {
+    background-color: #f4f4f4;
+}
+
+.boards ul li.hover .btn_remove {
+    float: right;
+    display: block;
+}

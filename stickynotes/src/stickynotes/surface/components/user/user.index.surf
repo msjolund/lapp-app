@@ -1,0 +1,4 @@
+{extends base.index}
+{block main}
+
+{/block}

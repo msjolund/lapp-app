@@ -1,0 +1,3 @@
+<div>An error occured:</div>
+<div>{$msg}</div>
+<div><a href="{$urlback}">Go back</a></div>
