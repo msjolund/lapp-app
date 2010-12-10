@@ -13,7 +13,7 @@
     </head>
     <body>
         <div class="header clearfix">
-            <span class="logo">Agile Board</span>
+            <span class="logo"><a href="/">Agile Board</a></span>
             <span class="user">
                 {if $user|isset()}
                     <span style="color: #aaa">Signed in as: </span>{$user.username} | <a href="{urlaction user.logout()}">Sign out</a>

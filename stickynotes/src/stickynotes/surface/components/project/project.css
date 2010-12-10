@@ -1,18 +1,25 @@
 /* project component CSS resource */
-.board_list {
-    
+
+h2 {
+    font-family: Georgia;
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 20px;
+    text-shadow: 0 1px #daf8d7;
 }
 
+
 .boards {
-    padding-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 .boards h3 {
-    padding: 10px;
+    padding: 10px 10px 10px;
     font-size: 20px;
     line-height: 22px;
     color: #444;
-    font-family: Georgia;
+    font-family: Arial;
     font-weight: normal;
 }
 
@@ -20,6 +27,9 @@
     border-top: 1px solid #eaeaea;
     padding: 0 10px;
     line-height: 30px;
+}
+.boards ul li.last {
+    border-bottom: 1px solid #eaeaea;
 }
 
 .boards ul li a {
@@ -31,17 +41,13 @@
    background-color: #f4f4f4;
 }
 
-.boards {
-
-}
-
-.boards .add_form {
-    float: right;
-    margin: 10px;
-}
-
-.board_form {
+.boards ul li.board_form {
+    border: none;
     padding: 10px;
+}
+
+.boards .board_form {
+    display: none;
 }
 
 .board_form input[type=text] {
@@ -73,4 +79,14 @@
 .boards ul li.hover .btn_remove {
     float: right;
     display: block;
+}
+
+.boards p {
+    padding: 0 10px 20px;
+    font-size: 14px;
+}
+.boards a.add {
+    line-height: 16px;
+    padding: 11px;
+    float: right;text-decoration: none; font-weight: bold; font-size: 11px;
 }

@@ -130,6 +130,8 @@ a.btn_add:hover {
 .add_form.active a.btn_add {
     border-bottom: none;
     background: #f4f4f4;
+    position: relative;
+    z-index: 1;
 }
 .add_form .nameform {
     background: #f4f4f4;
@@ -139,8 +141,9 @@ a.btn_add:hover {
     text-align: left;
     width: 157px;
     position: absolute;
-    right: -2px;
-    top: 20px;
+    right: 0px;
+    top: 18px;
+    z-index: 1;
 }
 
 .add_form.active .nameform {

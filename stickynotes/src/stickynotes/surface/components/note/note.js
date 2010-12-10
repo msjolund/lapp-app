@@ -39,11 +39,18 @@ var note = {
             hoverClass: "hover"
         });
 
+        $(document).bind("keydown", "ctrl+n", note.editNew )
+
         this.addOrbitListener("onNoteMoved", note.onNoteMoved);
         this.addOrbitListener("onNoteEdited", note.onNoteEdited);
         this.addOrbitListener("onNoteRemoved", note.onNoteRemoved);
         this.addOrbitListener("onNoteCreated", note.onNoteCreated);
         this.addOrbitListener("onColumnsChanged", note.onColumnsChanged);
+    },
+
+    getNoteElement: function (id)
+    {
+        return $(".note input[value="+id+"]").closest(".note")
     },
 
     onNoteMoved: function (e)
@@ -58,11 +65,11 @@ var note = {
     },
     onNoteRemoved: function (e)
     {
-        $(".note input[value="+e.data.note.id+"]").closest(".note").remove()
+        .remove()
     },
     onNoteCreated: function (e)
     {
-        if ($(".note input[name=id][value=" + e.data.note.id + "]").length) return;
+        if (note.getNoteElement(e.data.note.id).length) return;
         var col = $("div.col[colId="+e.data.note.columnId+"]");
         var markup = $S.render("note.note", e.data);
         var note = $(markup).appendTo(col)
@@ -106,6 +113,11 @@ var note = {
     {
         e.preventDefault();
         note.switchInput(this)
+    },
+
+    editNew: function (e) {
+        e.preventDefault();
+        note.edit($("#note_new").closest(".note"));
     },
 
     finish: function (el)
@@ -167,7 +179,7 @@ var note = {
         var estimate = el.find(".estimate input").val();
         var loadingEl = $($S.render("note.note", {loading: true})).appendTo(notesEl);
         $.post("/note/create/"+colId, { body: body, estimate: estimate }, function (response) {
-            var newNote = $($S.render("note.note", {note: response}));
+            var newNote = $($S.render("note.note", response));
             loadingEl.replaceWith(newNote);
             note.clearNew();
             note.initEdit(newNote);
@@ -198,11 +210,6 @@ var note = {
 
     initEdit: function (notes)
     {
-        /*notes.find(".estimate")
-        .dblclick(function (e) { e.preventDefault(); e.stopPropagation(); note.editEstimate(this); })
-        .delegate("input", "blur", function (e) { note.saveEstimate(this); } )
-        .delegate("input", "keydown", note.estimateKeydown);*/
-
         notes
         .dblclick(function (e)
         {

@@ -1,5 +1,3 @@
 {exportToJs}
-<li>
     <a href="{urlaction board.view($board)}">{$board.name}</a>
-    <a class="btn_remove marker" href="{urlaction project.board_remove($board)}" title="Remove board {$board.name}">-</a>
-</li>
+    <a class="btn_remove marker" href="{urlaction project.board_remove($board)}" onclick="return confirm('Are you sure you want to remove the board {$board.name} and all its notes?')" title="Remove board {$board.name}">-</a>
