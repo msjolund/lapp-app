@@ -4,19 +4,6 @@ import corecommunity as cc
 
 
 class UserController(ApplicationController):
-    def index(self):
-        """
-        Default action is to display login form, if not logged in, otherwise
-        display user details page for current user.
-        """
-
-        if self.session.get("user") is None:
-            self.session['user'] = self._facebookLogin()
-
-        if self.session.get("user") is not None:
-            return self.view()
-
-        return self.login()
 
     def view(self, userId = None):
         """
@@ -44,7 +31,6 @@ class UserController(ApplicationController):
         Invalidates session and redirects to /
         """
         self.sessionInvalidate()
-        self._facebookLogout()
         return self.redirect("/")
 
     def login(self):
@@ -102,6 +88,7 @@ class UserController(ApplicationController):
         username = self.post.get("username", "")
         password = self.post.get("password", "")
         email = self.post.get("username", "")
+        initials = self.post.get("initials", "")
         urlok = self.post.get("urlok", "/")
         urlback = self.post.get("urlback", "/")
 
@@ -121,6 +108,7 @@ class UserController(ApplicationController):
         user = models.User()
         user.username = username
         user.password = password
+        user.initials = initials
         user.email = email
 
         try:
@@ -138,39 +126,12 @@ class UserController(ApplicationController):
         self.context.urlback = urlback
         return self.render("user.usererror")
 
-    def _facebookLogout(self):
-        apiKey = Config.get("facebookApiKey", None)
-
-        if apiKey is None:
-            return
-
-        self.cookieExpire(apiKey)
-
-    def _facebookLogin(self):
-        apiKey = Config.get("facebookApiKey", None)
-
-        if apiKey is None:
-            return
-
-        if not self.cookieGet(apiKey):
-            return
-
-        facebookUser = self.cookieGet(apiKey + "_user")
-        facebookSessionKey = self.cookieGet(apiKey + "_session_key")
-
-        if facebookUser is None or facebookSessionKey is None:
-            return
-
-        try:
-            return services.UserService().facebookConnect(
-                facebookSessionKey,
-                long(facebookUser),
-                self.cookieGet(apiKey + "_expires"),
-                self.cookieGet(apiKey + "_ss"),
-                self.cookieGet(apiKey))
-        except exceptions.FacebookException:
-            return None
-
-
-    def facebookXdreciever(self):
-        return self.render("user.facebookxdreceiver")
+    def setInitials(self):
+        if not self.context.user:
+            response = SurfaceResponse()
+            response.status = "%d Not logged in" % httplib.UNAUTHORIZED
+            return response
+        user = services.UserService().findUser(self.context.user.id)
+        user.initials = self.post.get("initials", "")
+        services.UserService().updateUser(user)
+        return SurfaceResponse("ok")

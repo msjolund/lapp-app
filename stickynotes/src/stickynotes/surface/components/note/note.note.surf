@@ -10,17 +10,22 @@
                 <input type="hidden" name="id" value="{$note.id}">
                 <input type="hidden" name="column" value="{$note.columnId}">
             {/if}
-            {if !$noEstimate|default(False)}
-                <div class="estimate">
-                    <input value="{$note.estimate|default(0)}" disabled="disabled" name="estimate" />h
-                </div>
-            {/if}
-            <div class="inner">
+            <div class="inner {if $body|notset()}has_bottom{/if}">
                 <div class="body">
                     {if $note|isset()}
                         {$note.body} {* FIXME: Don't raw this. Easy to insert scripts for other users *}
                     {else}
                         {$body|default("Double click to edit")}
+                    {/if}
+                </div>
+                <div class="bottom">
+                    {if $body|notset()}
+                        <div class="estimate">
+                            <input value="{$note.estimate|default(0)}" disabled="disabled" name="estimate" />h
+                        </div>
+                        <div class="assignee">
+                          {$note.initials|default("")}
+                        </div>
                     {/if}
                 </div>
             </div>

@@ -1,7 +1,7 @@
 {extends base.index}
 {block main}
 
-    <h2 class="welcome">Welcome to Agile Board</h2>
+    <h2 class="welcome">Welcome to Quick Board</h2>
     <p class="welcome">A virtual white board for agile software projects, <br />where the notes are more sticky than fally.</p>
 
     <div class="centered_narrow account_form">
@@ -18,6 +18,9 @@
         <div id="signup" class="panel">
             {use user.login()}
                 {block action}{urlaction user.create()}{/block}
+                {block extraFields}
+                    <input tabindex="3" placeholder="Initials" type="text" name="initials" /> <br>
+                {/block}
                 {block button_value}Sign up{/block}
             {/use}
         </div>

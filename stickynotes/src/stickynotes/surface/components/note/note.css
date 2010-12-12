@@ -5,7 +5,7 @@
     color: #141414;
     font-family: SFCartoonistHandRegular, Comic sans;
     float: left;
-    font-size: 18px;
+    font-size: 17px;
     padding: 0 0px 3px;
 	background: rgb(0.10, 0.10, 0.10);
 	background: rgba(0, 0, 0, 0.10);
@@ -23,11 +23,13 @@
 
 .note .estimate {
     float: right;
-    padding: 10px;
+    padding: 0 10px 5px 0;
     cursor: default;
+    color: #777;
 }
 .note .estimate span {
     width: 30px;
+    font-size: 15px;
 }
 .note .estimate input {
     width: 30px;
@@ -35,18 +37,19 @@
     text-align: right;
     padding: 0;
     font-family: SFCartoonistHandRegular, Comic sans;
-    font-size: 18px;
-    color: #141414;
+    font-size: 15px;
+    color: #777;
     border: 1px solid #999;
 }
 
 .note .estimate input:disabled {
     border: none;
+    padding: 1px;
 }
 .note .inner, .stack {
     padding: 10px;
-    width: 170px;
-    height: 100px;
+    width: 150px;
+    min-height: 90px;
     background-color: #f3f2b1;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f3c6', endColorstr='#f6f0a7');
     background: -webkit-gradient(linear, left top, left bottom, from(#f7f3c6), to(#f6f0a7));
@@ -77,4 +80,22 @@
     border: 1px solid #999;
     width: 128px;
     height: 50px;
+}
+
+.note .assignee {
+    color: #777;
+    float: left;
+    font-size: 15px;
+    padding: 0 0 10px 10px
+}
+
+.note .inner.has_bottom {
+    padding-bottom: 30px;
+}
+
+.note .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }

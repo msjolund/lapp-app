@@ -65,15 +65,14 @@ var note = {
     },
     onNoteRemoved: function (e)
     {
-        .remove()
+        note.getNoteElement(e.data.note.id).remove()
     },
     onNoteCreated: function (e)
     {
         if (note.getNoteElement(e.data.note.id).length) return;
         var col = $("div.col[colId="+e.data.note.columnId+"]");
         var markup = $S.render("note.note", e.data);
-        var note = $(markup).appendTo(col)
-        console.debug(note)
+        $(markup).appendTo(col)
     },
     onColumnsChanged: function (e)
     {

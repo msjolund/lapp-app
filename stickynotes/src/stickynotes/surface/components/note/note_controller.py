@@ -18,7 +18,7 @@ class NoteController(ApplicationController):
 
     def move(self, id, column):
         col = services.ProjectService().columnGet(int(column))
-        note = services.ProjectService().noteUpdateColumn(int(id), int(column))
+        note = services.ProjectService().noteUpdateColumn(int(id), int(column), self.context.user)
         Orbit.sendToChannel("board_%d" % col.boardId, "onNoteMoved", {"note": note})
         return SurfaceResponse(jsonEncode({"note": note}))
 
@@ -30,6 +30,8 @@ class NoteController(ApplicationController):
         note.body = body
         note.columnId = int(column)
         note.estimate = int(self.post.get("estimate", 0))
+        note.lastEditedUserId = self.context.user.id
+        note.initials = self.context.user.initials
         note = services.ProjectService().noteCreate(note)
         Orbit.sendToChannel("board_%s" % col.boardId, "onNoteCreated", {"note": note})
         return SurfaceResponse(jsonEncode({"note": note}))
@@ -37,7 +39,7 @@ class NoteController(ApplicationController):
     def edit(self, id):
         body = self.post.get("body")
         estimate = self.post.get("estimate", 0)
-        note = services.ProjectService().noteEdit(int(id), body, estimate)
+        note = services.ProjectService().noteEdit(int(id), body, estimate, self.context.user)
         col = services.ProjectService().columnGet(note.columnId)
         Orbit.sendToChannel("board_%d" % col.boardId, "onNoteEdited", {"note": note})
         return SurfaceResponse(jsonEncode({"note": note}))

@@ -7,6 +7,8 @@ class Note(Model):
     body = t.Text
     columnId = t.Key
     estimate = t.Int
+    lastEditedUserId = t.Key
+    initials = t.String
 
 
 @dashboard.model()
@@ -58,22 +60,26 @@ class ProjectService(Service):
             cols[note.column].append(note)
         return cols
 
-    @params(t.Key, t.Text, t.Int)
+    @params(t.Key, t.Text, t.Int, User)
     @returns(Note)
-    def noteEdit(id, body, estimate):
+    def noteEdit(id, body, estimate, user):
         note = Note()
         note.id = id
+        note.userId = user.id
+        note.initials = user.initials
         note.body = body
         note.estimate = estimate
         Query.update(note)
         note = Query(Note).get(id)
         return note
 
-    @params(t.Key, t.Key)
+    @params(t.Key, t.Key, User)
     @returns(Note)
-    def noteUpdateColumn(id, col):
+    def noteUpdateColumn(id, col, user):
         note = Note()
         note.id = id
+        note.userId = user.id
+        note.initials = user.initials
         note.columnId = col
         Query.update(note)
         note = Query(Note).get(id)
@@ -112,7 +118,7 @@ class ProjectService(Service):
         board.projectId = projectId
         Query.save(board)
 
-        for name in ["To do", "In Progress", "Done"]:
+        for name in ["To do", "Doing", "Done"]:
             col = Column()
             col.name = name
             col.boardId = board.id

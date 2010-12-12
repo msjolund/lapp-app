@@ -1,7 +1,8 @@
 <form action="{block action}{urlaction user.authenticate()}{/block}" method="post">
     <input tabindex="1" placeholder="Email" type="text" name="username" /><br />
     <input tabindex="2" placeholder="Password" type="password" name="password" /> <br>
-    <input tabindex="3" type="submit" value="{block button_value}Sign in{/block}" />
+    {block extraFields}{/block}
+    <input type="submit" value="{block button_value}Sign in{/block}" />
     <input type="hidden" name="urlok" value="{urlaction project.view({"id": 213213})}" />
     <input type="hidden" name="urlback" value="{urlaction main.index()}" />
 </form>

@@ -7,6 +7,8 @@ import simplejson
 @dashboard.model()
 class User(cc.user.User):
     email = t.String(maxLength=128, nullable=True)
+    initials = t.String()
+
     @staticmethod
     def _getObjects(x, y, fieldValues):
         services.UserService().findUsers(fieldValues)
