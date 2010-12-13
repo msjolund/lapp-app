@@ -147,6 +147,11 @@ var note = {
                 $S("note_" + response.note.id).update(response)
             }, "json");
         }
+        // if it is a new note, and the auto-add checkbox is checked, add it to the left-most column
+        else if ($("#autoadd_checkbox:checked").length)
+        {
+            note.create(noteEl, $(".board .col:first"));
+        }
         else
         {
             S.debug("New note, ignoring!")

@@ -7,6 +7,11 @@
         <div class="stack relative">
             {render note.note({"editable": true})}
         </div>
+        <div class="clear"></div>
+
+        <div class="autoadd">
+            <label for="autoadd_checkbox"><input id="autoadd_checkbox" type="checkbox" checked="checked" /> Auto-add to board</label>
+        </div>
 
         <div>
             {$tip = "EDIT"}

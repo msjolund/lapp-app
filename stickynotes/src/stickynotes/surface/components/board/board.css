@@ -57,6 +57,7 @@
 
 .board .note {
     margin: 0 5px 5px 0;
+    position: relative;
 }
 .board .note.selected {
     border: 1px solid #999999;
@@ -72,7 +73,7 @@ div.tip {
     padding: 12px 10px;
     background: #fff url(/public/main/bulb_1_24.png) no-repeat 10px 11px;
     width: 107px;
-    margin: 10px 0 0 0;
+    margin: 80px 0 0 0;
     float: left;
     color: #777;
 }
@@ -182,4 +183,15 @@ a.btn_add:hover {
     line-height: 40px;
     background: #f4e178;
     font-weight: bold;
+}
+
+.autoadd {
+    padding-top: 3px;
+    font-size: 11px;
+    color: #444;
+}
+#autoadd_checkbox {
+    /*margin-top: 5px;
+    float: left;*/
+    vertical-align: middle;
 }
