@@ -5,7 +5,7 @@
     color: #141414;
     font-family: SFCartoonistHandRegular, Comic sans;
     float: left;
-    font-size: 17px;
+    font-size: 14px;
     padding: 0 0px 3px;
 	background: rgb(0.10, 0.10, 0.10);
 	background: rgba(0, 0, 0, 0.10);
@@ -37,7 +37,7 @@
     text-align: right;
     padding: 0;
     font-family: SFCartoonistHandRegular, Comic sans;
-    font-size: 15px;
+    font-size: 14px;
     color: #777;
     border: 1px solid #999;
 }
@@ -48,8 +48,8 @@
 }
 .note .inner, .stack {
     padding: 10px;
-    width: 150px;
-    min-height: 90px;
+    width: 105px;
+    min-height: 60px;
     background-color: #f3f2b1;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f3c6', endColorstr='#f6f0a7');
     background: -webkit-gradient(linear, left top, left bottom, from(#f7f3c6), to(#f6f0a7));

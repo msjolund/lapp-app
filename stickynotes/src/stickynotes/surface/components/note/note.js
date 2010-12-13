@@ -46,6 +46,8 @@ var note = {
         this.addOrbitListener("onNoteRemoved", note.onNoteRemoved);
         this.addOrbitListener("onNoteCreated", note.onNoteCreated);
         this.addOrbitListener("onColumnsChanged", note.onColumnsChanged);
+
+        $(document).click( function (e) { console.debug(e.target); if ($(e.target).closest(".note").length == 0) $(note.selectedNote).removeClass("selected");  } )
     },
 
     getNoteElement: function (id)
@@ -70,7 +72,7 @@ var note = {
     onNoteCreated: function (e)
     {
         if (note.getNoteElement(e.data.note.id).length) return;
-        var col = $("div.col[colId="+e.data.note.columnId+"]");
+        var col = $("div.col[colId="+e.data.note.columnId+"] .notes");
         var markup = $S.render("note.note", e.data);
         $(markup).appendTo(col)
     },
@@ -78,7 +80,6 @@ var note = {
     {
         $("#column_notification").show();
     },
-
 
     edit: function (el)
     {
@@ -216,7 +217,19 @@ var note = {
             note.edit(this);
         })
         .focusout(note.onFocusOut)
-        .draggable({ revert: true, revertDuration: 0, stack: ".note", start: function () { note.finish(this); } });
+        .draggable({ revert: true, revertDuration: 0, stack: ".note", start: function () { note.finish(this); } })
+        .click( function (e) { if ($(this).closest(".col").length) { e.preventDefault(); note.selectNote($(this)); } })
+    },
+
+    selectedNote: null,
+
+    selectNote: function (noteEl)
+    {
+        if (note.selectedNote)
+        {
+            note.selectedNote.removeClass("selected")
+        }
+        note.selectedNote = noteEl.addClass("selected");
     },
 
     onFocusOut: function (e)

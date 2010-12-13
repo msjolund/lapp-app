@@ -5,7 +5,7 @@
     background: #fff;
     font-family: SFCartoonistHandRegular, Comic sans;
     font-size: 30px;
-    margin-left: 192px;
+    margin-left: 149px;
 }
 
 .marker {
@@ -14,7 +14,7 @@
 
 .board h3 {
     margin: 7px 20px 5px 10px;
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .board .col {
@@ -33,7 +33,7 @@
 .board .col h4 {
     padding: 3px 0 5px 10px;
     border-bottom: 2px solid #5f88ff;
-    font-size: 22px;
+    font-size: 20px;
     text-align: left;
     color: #4eb645;
     position: relative;
@@ -58,6 +58,12 @@
 .board .note {
     margin: 0 5px 5px 0;
 }
+.board .note.selected {
+    border: 1px solid #999999;
+}
+.board .note.selected {
+    margin: 0 3px 3px 0;
+}
 
 div.tip {
     border: 1px solid #ccc;
@@ -65,7 +71,7 @@ div.tip {
     border-bottom: 1px solid #fff;
     padding: 12px 10px;
     background: #fff url(/public/main/bulb_1_24.png) no-repeat 10px 11px;
-    width: 150px;
+    width: 107px;
     margin: 10px 0 0 0;
     float: left;
     color: #777;
@@ -73,16 +79,16 @@ div.tip {
 
 div.tip p {
     margin-left: 32px;
-    line-height: 23px;
+    line-height: 18px;
 }
 
 .board_tools {
     float: left;
-    width: 160px;
+    /*width: 160px;*/
 }
 
 .board_tools .trashcan {
-    width: 150px;
+    width: 120px;
     height: 130px;
     background: url(/public/board/trashcan_full.png) no-repeat center center;
     margin-top: 100px;

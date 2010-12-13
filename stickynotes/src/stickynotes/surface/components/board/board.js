@@ -42,6 +42,8 @@ var board = {
         })*/
 
         $(".board .col h4").hover(function () { $(this).addClass("hover") }, function () { $(this).removeClass("hover") })
+
+        $(".board")
     }
 
     // Your board functionality here

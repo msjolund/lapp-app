@@ -8,15 +8,17 @@
                 {includeCss("/base/resources/flick/jquery-ui-1.8.6.custom.css")}
                 {includeCss("/base/resources/fonts/stylesheet.css")}
             {/bundle}
-            <title>{block title}Quick board{/block}</title>
+            <title>{block title}Quick Board{/block}</title>
         {/block}
+        <link rel="icon" type="image/png" href="/public/base/favicon.png">
+
     </head>
     <body>
         <div class="header clearfix">
             <span class="logo"><a href="/">Quick Board</a></span>
             <span class="user">
                 {if $user|isset()}
-                    <span style="color: #aaa">Signed in as: </span>{$user.username} | <a href="{urlaction user.logout()}">Sign out</a>
+                    <span style="color: #aaa">Welcome </span>{$user.username} | <a href="{urlaction user.logout()}">Sign out</a>
                 {else}
                     Not signed in <a href="{urlaction main.index()}">Sign in</a>
                 {/if}
