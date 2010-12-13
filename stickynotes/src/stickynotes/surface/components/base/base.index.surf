@@ -15,7 +15,7 @@
     </head>
     <body>
         <div class="header clearfix">
-            <span class="logo"><a href="/">Quick Board</a></span>
+            <span class="logo"><a href="/">Quick Board</a> <span>Alpha</span></span>
             <span class="user">
                 {if $user|isset()}
                     <span style="color: #aaa">Welcome </span>{$user.username} | <a href="{urlaction user.logout()}">Sign out</a>

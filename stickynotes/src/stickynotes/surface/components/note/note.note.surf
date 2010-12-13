@@ -13,15 +13,15 @@
             <div class="inner {if $body|notset()}has_bottom{/if}">
                 <div class="body">
                     {if $note|isset()}
-                        {$note.body} {* FIXME: Don't raw this. Easy to insert scripts for other users *}
+                        {render note.bodyview({"body": $note.body})}
                     {else}
-                        {$body|default("Double click to edit")}
+                        {render note.bodyview({"body": $body|default("Double click to edit")})}
                     {/if}
                 </div>
                 <div class="bottom">
                     {if $body|notset()}
                         <div class="estimate">
-                            <input value="{$note.estimate|default(0)}" disabled="disabled" name="estimate" />h
+                            {render note.estimateview({"estimate": $note.estimate|default(0)})}
                         </div>
                         <div class="assignee">
                           {$note.initials|default("")}

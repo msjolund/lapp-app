@@ -54,6 +54,20 @@ var note = {
     {
         return $(".note input[value="+id+"]").closest(".note")
     },
+    getEstimate: function(noteEl)
+    {
+        if (noteEl.find(".estimate input").length)
+            return noteEl.find(".estimate input").val();
+        else
+            return noteEl.find(".estimate span").val();
+    },
+    getBody: function(noteEl)
+    {
+        if (noteEl.find("textarea").length)
+            return $.trim(noteEl.find("textarea").val());
+        else
+            return $.trim(noteEl.find(".inner .body").text());
+    },
 
     onNoteMoved: function (e)
     {
@@ -84,23 +98,23 @@ var note = {
     edit: function (el)
     {
         var el = $(el);
+        if (el.is(".edit")) return;
         el.draggable("disable");
-        var inner=el.find(".inner .body");
-        inner[0].contentEditable = true;
-
-        inner.addClass("focused");
-        inner.focusin(function () { $(this).addClass("focused")});
-        var estimate = el.find(".estimate input").focusin(function () { $(this).addClass("focused")}).removeAttr("disabled");
-
-        inner.focus().selectText();
         el.addClass("edit");
 
-        inner.add(estimate)
-            .bind('keydown', 'ctrl+return', note.onCtrlReturn)
-            .bind('keydown', 'tab', note.onTab);
-        estimate.bind('keydown', 'return', note.onCtrlReturn);
+        var bodyEl = el.find(".inner .body");
+        var textarea = bodyEl.html($S.render("note.bodyedit", {body: note.getBody(el)})).find("textarea").addClass("focused")[0];
+        textarea.focus(); textarea.select();
 
-        var idEl = el.find("input[name=id]");
+        var estimateEl = el.find(".estimate");
+        estimateEl.html($S.render("note.estimateedit", {estimate: $.trim(estimateEl.find("span").text())}));
+
+        estimateEl.find("input").add(textarea)
+            .focusin(function () { $(this).addClass("focused") })
+            .bind('keydown', 'ctrl+return', note.onCtrlReturn)
+            .bind('keydown', 'return', note.onCtrlReturn)
+            .bind('keydown', 'tab', note.onTab);
+
         $S("tip").update({tip: "FINISH"})
     },
 
@@ -125,29 +139,18 @@ var note = {
         var noteEl = $(el);
         if (!noteEl.hasClass("edit")) return;
         noteEl.removeClass("edit").draggable("enable").unbind('keydown');
-        var inner = noteEl.find(".inner .body");
-        var estimateInput = noteEl.find(".estimate input").attr("disabled", "disabled");
-        if ($.browser.msie) {
-          inner[0].contentEditable = false;
-        }
-        else {
-          $(inner[0]).removeAttr( 'contenteditable' );
-        }
-        if ($.browser.mozilla) {
-          window.getSelection().removeAllRanges();
-        }
+
         // if it is an existing note, save editing
         var idEl = noteEl.find("input[name=id]");
         if (idEl.length)
         {
-            var estimate = noteEl.find(".estimate input").val()
-            $.post("/note/edit/"+idEl.val(), { body: inner.text(), estimate: estimate }, function (response) {
-                console.debug($S("note_" + response.note.id))
-                console.debug(response);
+            var estimate = note.getEstimate(noteEl);
+            var body = note.getBody(noteEl);
+            $.post("/note/edit/"+idEl.val(), { body: body, estimate: estimate }, function (response) {
                 $S("note_" + response.note.id).update(response)
             }, "json");
         }
-        // if it is a new note, and the auto-add checkbox is checked, add it to the left-most column
+        // if it is a new note and the auto-add checkbox is checked, add it to the left-most column
         else if ($("#autoadd_checkbox:checked").length)
         {
             note.create(noteEl, $(".board .col:first"));
@@ -180,8 +183,8 @@ var note = {
     {
         var colId = $(col).attr("colId");
         var notesEl = $(col).find(".notes")[0];
-        var body = el.find(".inner .body").html();
-        var estimate = el.find(".estimate input").val();
+        var body = note.getBody(el);
+        var estimate = note.getEstimate(el);
         var loadingEl = $($S.render("note.note", {loading: true})).appendTo(notesEl);
         $.post("/note/create/"+colId, { body: body, estimate: estimate }, function (response) {
             var newNote = $($S.render("note.note", response));
@@ -265,16 +268,15 @@ var note = {
     switchInput: function (el)
     {
         el = $(el).closest(".note")
-        //debugger;
-        if (el.find(".focused").hasClass("body"))
+        if (el.find(".focused").is("textarea"))
         {
             el.find(".estimate input")[0].focus();
             el.find(".estimate input")[0].select()
         }
         else
         {
-            el.find(".body")[0].focus();
-            el.find(".body").selectText();
+            el.find("textarea")[0].focus();
+            el.find("textarea").selectText();
         }
     }
 };

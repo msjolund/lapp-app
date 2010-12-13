@@ -127,10 +127,17 @@ table {
     padding: 0 20px;
     float: left;
     font-size: 14px;
+    font-weight: bold;
 }
 .header .logo a {
     color: #ffffff;
     text-decoration: none;
+}
+.header .logo span {
+    padding-left: 5px;
+    color: #999;
+    text-transform: uppercase;
+    font-size: 11px;
 }
 
 input[type="text"], input[type="password"] {

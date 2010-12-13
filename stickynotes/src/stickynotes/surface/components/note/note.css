@@ -6,7 +6,7 @@
     font-family: SFCartoonistHandRegular, Comic sans;
     float: left;
     font-size: 14px;
-    padding: 0 0px 3px;
+    padding: 0 0 3px;
 	background: rgb(0.10, 0.10, 0.10);
 	background: rgba(0, 0, 0, 0.10);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000010, endColorstr=#00000010);
@@ -15,6 +15,15 @@
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+}
+
+.note textarea {
+    position: relative;
+    margin: -1px auto auto -1px;
+    color: #141414;
+    width: 107px;
+    height: 59px;
+    background: transparent;
 }
 
 .note.ui-state-disabled {
@@ -29,17 +38,21 @@
 }
 .note .estimate span {
     width: 30px;
-    font-size: 15px;
+    padding: 1px;
 }
-.note .estimate input {
-    width: 30px;
+
+.note .estimate input, .note textarea {
     background: transparent;
-    text-align: right;
     padding: 0;
     font-family: SFCartoonistHandRegular, Comic sans;
     font-size: 14px;
+    border: 1px solid #aaa;
+}
+
+.note .estimate input {
     color: #777;
-    border: 1px solid #999;
+    width: 30px;
+    text-align: right;
 }
 
 .note .estimate input:disabled {
@@ -56,12 +69,6 @@
     background: -moz-linear-gradient(top,  #f7f3c6,  #f6f0a7);
 }
 
-.note.edit .inner .body {
-    border: 1px solid #999;
-    padding: 3px;
-    min-height: 30px;
-}
-
 .stack {
     margin: 10px 0 0;
     border-right: 4px solid #e7e6a8;
@@ -75,17 +82,11 @@
 .stack .note {
     padding: 0;
 }
-.note .inner textarea {
-    background: transparent;
-    border: 1px solid #999;
-    width: 128px;
-    height: 50px;
-}
 
 .note .assignee {
     color: #777;
     float: left;
-    font-size: 15px;
+    font-size: 14px;
     padding: 0 0 10px 10px
 }
 
