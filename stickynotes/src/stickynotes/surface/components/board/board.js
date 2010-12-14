@@ -11,40 +11,57 @@ var board = {
             {
                 e.preventDefault();
                 $(this).closest(".add_form").toggleClass("active");
-                console.debug($(this).siblings(".nameform"), $(this).outerHeight(), $(this).position().top)
+                console.debug($(this).siblings(".nameform"), $(this).outerHeight(), $(this).position().top);
                 if ($(this).siblings(".nameform").is(":visible"))
                 {
                     $(this).siblings(".nameform").find("input[type=text]")[0].select();
                 }
-            })
+            });
 
-            /*.delegate(".col h4 .remove", "click", function (e)
+        $(document).ajaxError(function (event, request, settings) {
+            if (request.status == 401)
             {
-                e.preventDefault();
-                console.debug("Remove column");
-                var link = $(this);
-                $.get(link.attr("href"), function (response)
-                {
-                    console.debug("removed")
-                })
-            });*/
+                window.location.href = "/";
+            }
+            else
+            {
+                alert("Sorry, something went wrong when you did what you just did.");
+            }
+        });
 
-        /*$(".board .col_new form").submit(function (e)
+        var boardEl = $(".board:first");
+         boardEl.find(".col h4").hover(function () { $(this).addClass("hover") }, function () { $(this).removeClass("hover") });
+
+        board.onBoardChanged.call(boardEl);
+        boardEl.bind("change", board.onBoardChanged);
+    },
+
+    onBoardChanged: function ()
+    {
+        boardEl = $(this);
+        board.calculateColumns(boardEl);
+        board.fixColumnHeights(boardEl);
+    },
+
+    calculateColumns: function (boardEl)
+    {
+        boardEl.find(".col").each( function ()
         {
-            e.preventDefault();
-            var form = $(this);
-            console.debug("serialized form: ",  form)
-            $.post(form.attr("action"), form.serialize(), function (response) {
-                console.debug("response", response);
-                form.closest(".col_new").removeClass("active");
+            var colEstimate = 0;
+            var col = $(this);
+            var notes = col.find(".notes:first .note");
+            notes.each( function () {
+                colEstimate += note.getEstimate($(this));
+            });
+            col.find("h4 span.estimate .number").text(colEstimate);
+        });
+    },
 
-            })
-        })*/
+    fixColumnHeights: function (boardEl)
+    {
 
-        $(".board .col h4").hover(function () { $(this).addClass("hover") }, function () { $(this).removeClass("hover") })
-
-        $(".board")
     }
+
 
     // Your board functionality here
 };

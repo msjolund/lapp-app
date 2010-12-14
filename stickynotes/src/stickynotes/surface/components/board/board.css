@@ -164,6 +164,14 @@ a.btn_add:hover {
     right: -20px;
 }
 
+.board .col h4 .estimate {
+    float: right;
+    padding-right: 10px;
+    color: #ccc;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
 #column_notification {
     display: none;
     position: fixed;
