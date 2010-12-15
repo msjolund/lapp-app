@@ -15,7 +15,7 @@
                     {if $note|isset()}
                         {render note.bodyview({"body": $note.body})}
                     {else}
-                        {render note.bodyview({"body": $body|default("Double click to edit")})}
+                        {raw $body|default("Double click to edit")}
                     {/if}
                 </div>
                 <div class="bottom">

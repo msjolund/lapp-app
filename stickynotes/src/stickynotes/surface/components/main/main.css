@@ -70,6 +70,6 @@ p.welcome {
 
 .account_form .note {
     position: absolute;
-    bottom: -80px;
-    right: -100px;
+    bottom: -50px;
+    right: 10px;
 }
