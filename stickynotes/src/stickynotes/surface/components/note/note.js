@@ -56,10 +56,12 @@ var note = {
     },
     getEstimate: function(noteEl)
     {
+        var val;
         if (noteEl.find(".estimate input").length)
-            return noteEl.find(".estimate input").val();
+            val = noteEl.find(".estimate input").val();
         else
-            return noteEl.find(".estimate span").val();
+            val = noteEl.find(".estimate span").text();
+        return parseInt(val);
     },
     getBody: function(noteEl)
     {
@@ -74,14 +76,17 @@ var note = {
         var surfaceEl = $S("note_" + e.data.note.id).update(e.data);
         var col = $("div.col[colId="+e.data.note.columnId+"]");
         $(surfaceEl).closest(".note").appendTo(col.find(".notes"));
+        col.closest(".board").trigger("change")
     },
     onNoteEdited: function (e)
     {
-        $S("note_" + e.data.note.id).update(e.data);
+        var el = $S("note_" + e.data.note.id).update(e.data);
+        $(el).closest(".board").trigger("change")
     },
     onNoteRemoved: function (e)
     {
         note.getNoteElement(e.data.note.id).remove()
+        $(".board:first").trigger("change")
     },
     onNoteCreated: function (e)
     {
@@ -89,6 +94,7 @@ var note = {
         var col = $("div.col[colId="+e.data.note.columnId+"] .notes");
         var markup = $S.render("note.note", e.data);
         $(markup).appendTo(col)
+        col.closest(".board").trigger("change")
     },
     onColumnsChanged: function (e)
     {
@@ -113,11 +119,17 @@ var note = {
             .focusin(function () { $(this).addClass("focused") })
             .bind('keydown', 'ctrl+return', note.onCtrlReturn)
             .bind('keydown', 'return', note.onCtrlReturn)
-            .bind('keydown', 'tab', note.onTab);
+            .bind('keydown', 'tab', note.onTab)
+            .bind('keydown', 'esc', note.onEscape)
 
         $S("tip").update({tip: "FINISH"})
     },
 
+    onEscape: function (e)
+    {
+        e.preventDefault();
+        note.cancelEdit($(this).closest(".note"))
+    },
     onCtrlReturn: function (e)
     {
         e.preventDefault();
@@ -148,12 +160,14 @@ var note = {
             var body = note.getBody(noteEl);
             $.post("/note/edit/"+idEl.val(), { body: body, estimate: estimate }, function (response) {
                 $S("note_" + response.note.id).update(response)
+                noteEl.closest(".board").trigger("change")
             }, "json");
         }
         // if it is a new note and the auto-add checkbox is checked, add it to the left-most column
         else if ($("#autoadd_checkbox:checked").length)
         {
             note.create(noteEl, $(".board .col:first"));
+            noteEl.closest(".board").trigger("change")
         }
         else
         {
@@ -176,6 +190,7 @@ var note = {
         el.appendTo($(col).find(".notes")[0])
         $.getJSON("/note/move/ID/COL".replace(/ID/, id).replace(/COL/, colId), function (response) {
             $S("note_" + id).update(response)
+            $(col).closest(".board").trigger("change");
         });
     },
 
@@ -191,6 +206,7 @@ var note = {
             loadingEl.replaceWith(newNote);
             note.clearNew();
             note.initEdit(newNote);
+            $(col).closest(".board").trigger("change");
         }, "json");
 
         $S("tip").update({tip: "EDIT"})
@@ -206,6 +222,7 @@ var note = {
             $.getJSON("/note/remove/"+idEl.val()+"/"+Surface.globalContext.boardId, function (response) {
                 noteEl.remove();
                 $S("note_" + response.note.id).remove()
+                noteEl.closest(".board").trigger("change");
             });
         }
     },
@@ -253,18 +270,13 @@ var note = {
 
     },
 
-    estimateKeydown: function (e)
+    cancelEdit: function (noteEl)
     {
-        if (e.which == 13)
-        {
-            note.saveEstimate(this);
-        }
-        else if (e.which == 27)
-        {
-            e.preventDefault();
-            note.cancelEstimate(this);
-        }
+        var id = noteEl.find("input[name=id]").val();
+        $S("note_" + id).refresh();
+        noteEl.removeClass("edit").draggable("enable").unbind('keydown');
     },
+
     switchInput: function (el)
     {
         el = $(el).closest(".note")
