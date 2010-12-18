@@ -4,13 +4,15 @@ from stickynotes.surface.application import *
 class BoardController(ApplicationController):
     @beforeAction
     def access(self):
-        response = SurfaceResponse()
         if "user" not in self.session:
+            response = SurfaceResponse()
             response.status = "%d Not logged in" % httplib.UNAUTHORIZED
             return response
 
-    @excludeBefore("access")
+        self._initCurrentProject(2772296566596173913)
+
     def view(self, id):
+        print "INITATING"
         if "user" not in self.session:
             return self.redirect("/")
         self.context.board = services.ProjectService().boardGetFull(int(id))

@@ -5,6 +5,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             {bundle}
                 {includeCss("/*/*.css")}
+                {includeCss("/base/resources/*.css")}
                 {includeCss("/base/resources/flick/jquery-ui-1.8.6.custom.css")}
                 {includeCss("/base/resources/fonts/stylesheet.css")}
             {/bundle}
@@ -16,6 +17,7 @@
     <body>
         <div class="header clearfix">
             <span class="logo"><a href="/">Quick Board</a> <span>Alpha</span></span>
+
             <span class="user">
                 {if $user|isset()}
                     <span style="color: #aaa">Welcome </span>{$user.username} | <a href="{urlaction user.logout()}">Sign out</a>
@@ -23,10 +25,28 @@
                     Not signed in <a href="{urlaction main.index()}">Sign in</a>
                 {/if}
             </span>
+            {if $user|isset()}
+                <a href="/" class="item project"><span>Default project</span></a>
+            {/if}
         </div>
+        {if $user|isset()}
+            <div id="project_dropdown">
+                    <div class="draginfo">
+                        Drag here for more options
+                    </div>
+                    <ul>
+                        {for $board in $_globalContext.currentProject.boards}
+                            <li><a href="{urlaction board.view($board)}" boardId="{$board.id}"'>{$board.name}</a></li>
+                        {/for}
+                        <li class="all"><a href="{urlaction project.view($_globalContext.currentProject)}">View all</a></li>
+                    </ul>
+            </div>
+        {/if}
+
         <div class="main_content">
             {block main}{/block}
         </div>
+
         {block footer}
             {bundle}
                 {* Adds javascripts from the Surface framework, and also all modifier javascripts. *}

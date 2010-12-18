@@ -9,10 +9,8 @@ class ProjectController(ApplicationController):
             return self.redirect("/")
 
     def view(self, id):
-        self.context.project = SurfaceDto()
-        self.context.project.id = 2772296566596173913
-        self.context.project.name = "Default project"
-        self.context.boards = services.ProjectService().findBoardsByProjectIds([self.context.project.id])
+        self._initCurrentProject(2772296566596173913)
+        self.context.project = self.globalContext.currentProject
         return self.render('project.index')
 
     def board_add(self, id):

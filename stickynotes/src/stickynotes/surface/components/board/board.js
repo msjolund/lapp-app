@@ -1,11 +1,10 @@
 /* board component JS resource */
 
 var board = {
-    onComponentReady: function() {
-        // This method gets called when board component is used (imported, extended) on a page.
-    },
-    
     onDomReady: function() {
+
+        board.initDragDrop();
+
         $(".add_form")
             .delegate("a", "click", function (e)
             {
@@ -26,6 +25,7 @@ var board = {
             else
             {
                 alert("Sorry, something went wrong when you did what you just did.");
+                console.debug(request)
             }
         });
 
@@ -34,6 +34,81 @@ var board = {
 
         board.onBoardChanged.call(boardEl);
         boardEl.bind("change", board.onBoardChanged);
+    },
+
+    initDragDrop: function ()
+    {
+        $(".board .col").droppable(
+        {
+            tolerance: "pointer",
+            drop: function( event, ui ) {
+                var col = $(this).attr("colId");
+                var noteEl = ui.draggable;
+                if (noteEl.find("input[name=id]").length)
+                {
+                    S.debug("this is a move operation")
+                    note.move(noteEl, this)
+                }
+                else
+                {
+                    S.debug("this is a create operation");
+                    note.create(noteEl, this)
+                }
+            },
+            hoverClass: "hover"
+        });
+
+        $("#trashcan").droppable(
+        {
+            tolerance: "pointer",
+            drop: function( event, ui ) {
+                var noteEl = ui.draggable;
+                if (noteEl.find("input[name=id]").length)
+                {
+                    S.debug("this is a remove operation")
+                    note.remove(noteEl, this)
+                }
+                else
+                {
+                    S.debug("this is a clear operation");
+                    note.clearNew();
+                }
+            },
+            hoverClass: "hover"
+        });
+
+        $("#project_dropdown").droppable(
+        {
+            tolerance: "pointer",
+            over: function ()
+            {
+                $("#project_dropdown").addClass("onhover");
+                $("#board_columns > .col").droppable("disable")
+            },
+            out: function ()
+            {
+                $("#project_dropdown").removeClass("onhover");
+                $("#board_columns > .col").droppable("enable")
+            },
+            drop: function (e, ui)
+            {
+                $("#board_columns > .col").droppable("enable");
+                if ($(this).find("ul li a.draghover").length)
+                {
+                    // user were dropping on a list item inside the dropdown
+                    var boardId = $(this).find("ul li a.draghover").attr("boardId");
+                    setTimeout(function () {
+                        // setTimeout needed because moveToBoard will remove the element being dragged, which will make draggable fail to trigger "end" event
+                        note.moveToBoard(ui.draggable, boardId);
+                    }, 40)
+                }
+            }
+        });
+        $("#project_dropdown ul li a").droppable(
+        {
+            hoverClass: "draghover",
+            tolerance: "pointer"
+        });
     },
 
     onBoardChanged: function ()
@@ -62,6 +137,4 @@ var board = {
 
     }
 
-
-    // Your board functionality here
 };

@@ -6,6 +6,7 @@ class Note(Model):
     id = t.Primary()
     body = t.Text
     columnId = t.Key
+    projectId = t.Key
     estimate = t.Int
     lastEditedUserId = t.Key
     initials = t.String
@@ -17,6 +18,7 @@ class Column(Model):
     name = t.String
     notes = hasMany(Note, "Column.id", "Note.columnId")
     boardId = t.Key
+
 
 @dashboard.model()
 class Board(Model):
@@ -43,6 +45,12 @@ class UserProject(Model):
 #class Project(Model):
 #    id = t.Primary
 #    notes = hasMany(Sprint, "Sprint.projectId")
+
+class InvalidMoveOperation(TransportException):
+    pass
+
+class EmptyBoardException(TransportException):
+    pass
 
 class ProjectService(Service):
     Crud.addAll(Note)
@@ -85,6 +93,20 @@ class ProjectService(Service):
         note = Query(Note).get(id)
         return note
 
+    @params(t.Key, t.Key)
+    def noteMoveToBoard(id, boardId):
+        board = services.ProjectService().boardGet(boardId)
+        loadTypes(board, Column)
+        note = services.ProjectService().noteGet(id)
+        if note.projectId != board.projectId:
+            raise InvalidMoveOperation()
+
+        if not board.columns:
+            raise EmptyBoardException("Target board has no columns")
+
+        note.columnId = board.columns[0].id
+        Query.update(note)
+
     @params(t.Key)
     @returns(Column)
     def columnGet(id):
@@ -125,3 +147,8 @@ class ProjectService(Service):
             services.ProjectService().columnCreate(col)
 
         return board
+
+    @staticmethod
+    def _hasAccessToProject(userId, projectId):
+        access = Query(UserProject).filter(userId=userId, projectId=projectId).get()
+        return access

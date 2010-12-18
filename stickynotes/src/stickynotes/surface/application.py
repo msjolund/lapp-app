@@ -33,4 +33,8 @@ class ApplicationController(SurfaceController):
             self.context.userMessage = self.session["userMessage"]
             del self.session["userMessage"]
 
-    
+    def _initCurrentProject(self, id):
+        self.globalContext.currentProject = SurfaceDto()
+        self.globalContext.currentProject.id = 2772296566596173913
+        self.globalContext.currentProject.name = "Default Project"
+        self.globalContext.currentProject.boards = services.ProjectService().findBoardsByProjectIds([self.globalContext.currentProject.id])

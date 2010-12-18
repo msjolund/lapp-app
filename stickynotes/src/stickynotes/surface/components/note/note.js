@@ -2,43 +2,6 @@ var note = {
     onDomReady: function() {
         note.initEdit($(".note.editable"));
 
-        $(".board .col").droppable(
-        {
-            drop: function( event, ui ) {
-                var col = $(this).attr("colId");
-                var noteEl = ui.draggable;
-                if (noteEl.find("input[name=id]").length)
-                {
-                    S.debug("this is a move operation")
-                    note.move(noteEl, this)
-                }
-                else
-                {
-                    S.debug("this is a create operation");
-                    note.create(noteEl, this)
-                }
-            },
-            hoverClass: "hover"
-        });
-
-        $("#trashcan").droppable(
-        {
-            drop: function( event, ui ) {
-                var noteEl = ui.draggable;
-                if (noteEl.find("input[name=id]").length)
-                {
-                    S.debug("this is a remove operation")
-                    note.remove(noteEl, this)
-                }
-                else
-                {
-                    S.debug("this is a clear operation");
-                    note.clearNew();
-                }
-            },
-            hoverClass: "hover"
-        });
-
         $(document).bind("keydown", "ctrl+n", note.editNew )
 
         this.addOrbitListener("onNoteMoved", note.onNoteMoved);
@@ -47,7 +10,7 @@ var note = {
         this.addOrbitListener("onNoteCreated", note.onNoteCreated);
         this.addOrbitListener("onColumnsChanged", note.onColumnsChanged);
 
-        $(document).click( function (e) { console.debug(e.target); if ($(e.target).closest(".note").length == 0) $(note.selectedNote).removeClass("selected");  } )
+        $(document).click( function (e) { if ($(e.target).closest(".note").length == 0) $(note.selectedNote).removeClass("selected");  } )
     },
 
     getNoteElement: function (id)
@@ -221,10 +184,18 @@ var note = {
         {
             $.getJSON("/note/remove/"+idEl.val()+"/"+Surface.globalContext.boardId, function (response) {
                 noteEl.remove();
-                $S("note_" + response.note.id).remove()
                 noteEl.closest(".board").trigger("change");
             });
         }
+    },
+
+    moveToBoard: function (el, boardId)
+    {
+        var id = el.find("[name=id]").val();
+        el.remove();
+        $.getJSON("/note/move_to_board/NOTE/BOARD".replace(/NOTE/, id).replace(/BOARD/, boardId), function (response) {
+            console.debug("Move to board ok")
+        });
     },
 
     clearNew: function ()
@@ -242,8 +213,46 @@ var note = {
             note.edit(this);
         })
         .focusout(note.onFocusOut)
-        .draggable({ revert: true, revertDuration: 0, stack: ".note", start: function () { note.finish(this); } })
+        .draggable(
+            {
+                refreshPositions: true,
+                revert: true,
+                revertDuration: 0,
+                stack: ".note",
+                start: note.onDragStart,
+                zIndex: 900,
+                stop: note.onDragEnd,
+                helper: function (e, ui) {
+                    return $(e.target).closest(".note").clone().appendTo(document.body);
+                 }
+                 /*,
+                helper: function (e, ui) {
+                    var pos = $(e.target).closest(".note").position();
+                    console.debug(e.pageX, pos.left)
+                    var x = e.pageX - pos.left - 20;
+                    var y = e.pageY - pos.top - 20;
+                    return $('<img src="/public/base/favicon.png" style="display: block; margin: ' + y + 'px 0 0 ' + x +'px" />').appendTo(document.body);
+                }*/
+            })
         .click( function (e) { if ($(this).closest(".col").length) { e.preventDefault(); note.selectNote($(this)); } })
+        .hover(
+          function () {
+            $(this).addClass("hover");
+          },
+          function () {
+            $(this).removeClass("hover");
+          }
+        );
+    },
+
+    onDragStart: function (e, ui)
+    {
+        note.finish(this);
+        $("#project_dropdown").addClass("ondrag");
+    },
+    onDragEnd: function (e, ui)
+    {
+        $("#project_dropdown").removeClass("ondrag");
     },
 
     selectedNote: null,

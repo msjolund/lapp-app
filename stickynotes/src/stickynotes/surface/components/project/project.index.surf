@@ -1,5 +1,6 @@
 {extends base.index}
 {block main}
+
     <h2>{$project.name}</h2>
     <div class="board_list centered_narrow">
         <div class="boards">
@@ -9,7 +10,7 @@
 
             <ul>
                 {render project.boardform()}
-                {for $board in $boards}
+                {for $board in $project.boards}
                     <li {if !$_hasNext}class="last"{/if}>{render project.board({"board": $board})}</li>
                 {/for}
 

@@ -111,17 +111,20 @@ table {
 
 .header {
     line-height: 38px;
+    height: 38px;
     background: #4b4b4b;
-    color: #fff;
     border-bottom: 1px solid #bbb;
+    color: #fff;
+}
+.header a {
+    color: #fff;    
 }
 .header .user {
     float: right;
     padding: 0 20px;
+    border-left: 1px solid #585858;
 }
-.header .user a {
-    color: #fff;
-}
+
 
 .header .logo {
     padding: 0 20px;
@@ -130,7 +133,6 @@ table {
     font-weight: bold;
 }
 .header .logo a {
-    color: #ffffff;
     text-decoration: none;
 }
 .header .logo span {
@@ -138,6 +140,31 @@ table {
     color: #999;
     text-transform: uppercase;
     font-size: 11px;
+}
+
+.header .item {
+    float: right;
+    height: 38px;
+    line-height: 38px;
+    border-left: 1px solid #585858;
+    padding: 0 17px 0 20px;;
+    text-decoration: none;
+}
+.header .item span {
+    background: url(/public/base/downarrow_tiny.png) no-repeat right 6px;
+    padding-right: 17px;
+}
+.header .item:hover, .header .item.hover {
+    background-color: #fff;
+    height: 39px;
+    color: #2b2b2b;
+    position: relative;
+    z-index: 20;
+    border-color: #cacaca;
+}
+
+.header .item.hover span {
+    background-image: url(/public/base/downarrow_tiny_black.png);
 }
 
 input[type="text"], input[type="password"] {
@@ -179,3 +206,65 @@ h3 {
 .relative {
     position: relative;
 }
+
+#project_dropdown {
+    display: none;
+    position: fixed;
+    top: 38px;
+    right: 100px;
+    background: #ffffff;
+    width: 200px;
+    z-index: 300;
+    border: 1px solid #cacaca;
+    border-top: none;
+    border-bottom-width: 2px;
+}
+#project_dropdown.hover {
+    display: block;
+}
+#project_dropdown ul li a {
+    padding: 10px;
+    display: block;
+    color: #4b4b4b;
+    text-decoration: none;
+    border-bottom: 1px solid #e4e4e4;
+}
+#project_dropdown ul li a:hover {
+    background-color: #f4f4f4;
+}
+#project_dropdown ul li a.draghover {
+    background-color: #f0f0f0;
+}
+#project_dropdown ul li.all a {
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #888;
+    border: none;
+}
+#project_dropdown ul li.all a:hover {
+    color: #000;
+}
+#project_dropdown ul li.all a:hover {
+    background: none;
+}
+
+#project_dropdown.ondrag {
+    display: block;
+}
+#project_dropdown.ondrag ul {
+    display: none;
+}
+#project_dropdown.onhover ul {
+    display: block;
+}
+
+#project_dropdown .draginfo {
+    display: none;
+    color: #bbb;
+    padding: 20px;
+}
+#project_dropdown.ondrag .draginfo {
+    display: block;
+}
+

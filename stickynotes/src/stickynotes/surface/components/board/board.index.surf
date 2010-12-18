@@ -38,7 +38,7 @@
         {render board.nameform()}
         <a class="btn_add marker" href="{urlaction board.column_add($board)}" title="Add column">+</a>
     </div>
-    <div class="columns clearfix">
+    <div id="board_columns" class="columns clearfix">
         {$colWidth = 100.0/$board.columns|count()}
         {for $col in $board.columns}
             <div class="col {if !$_hasNext}last{/if}" style="width: {$colWidth}%" colId="{$col.id}">

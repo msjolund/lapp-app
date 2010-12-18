@@ -10,11 +10,12 @@ class NoteController(ApplicationController):
             #board = services.ProjectService().boardGet(note.boardId)
             #project = services.ProjectService().projectGet(board.projectId)
 
-
         response = SurfaceResponse()
         if "user" not in self.session:
             response.status = "%d Not logged in" % httplib.UNAUTHORIZED 
             return response
+
+        self._initCurrentProject(2772296566596173913)
 
     def move(self, id, column):
         col = services.ProjectService().columnGet(int(column))
@@ -32,6 +33,7 @@ class NoteController(ApplicationController):
         note.estimate = int(self.post.get("estimate", 0))
         note.lastEditedUserId = self.context.user.id
         note.initials = self.context.user.initials
+        note.projectId = self.globalContext.currentProjectId
         note = services.ProjectService().noteCreate(note)
         Orbit.sendToChannel("board_%s" % col.boardId, "onNoteCreated", {"note": note})
         return SurfaceResponse(jsonEncode({"note": note}))
@@ -47,4 +49,8 @@ class NoteController(ApplicationController):
     def remove(self, id, boardId):
         services.ProjectService().noteDelete(id)
         Orbit.sendToChannel("board_%s" % boardId, "onNoteRemoved", {"note": {"id": id}})
-        return SurfaceResponse("ok")
+        return SurfaceResponse(jsonEncode("ok"))
+
+    def move_to_board(self, noteId, boardId):
+        services.ProjectService().noteMoveToBoard(int(noteId), int(boardId))
+        return SurfaceResponse(jsonEncode("ok"))
