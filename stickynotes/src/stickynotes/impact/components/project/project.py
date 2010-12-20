@@ -1,6 +1,7 @@
 # coding=UTF-8
 from impact.api import *
 from stickynotes.impact.components.user.user import User
+from datetime import datetime
 
 class Note(Model):
     id = t.Primary()
@@ -26,6 +27,7 @@ class Board(Model):
     name = t.String()
     columns = hasMany(Column, "Board.id", "Column.boardId")
     projectId = t.Key()
+    lastChangedDate = t.DateTime()
 
 @dashboard.model()
 class Project(Model):
@@ -52,6 +54,12 @@ class InvalidMoveOperation(TransportException):
 class EmptyBoardException(TransportException):
     pass
 
+class NoteNotFoundException(TransportException):
+    pass
+
+class BoardNotFoundException(TransportException):
+    pass
+
 class ProjectService(Service):
     Crud.addAll(Note)
     Crud.addAll(Board)
@@ -71,26 +79,41 @@ class ProjectService(Service):
     @params(t.Key, t.Text, t.Int, User)
     @returns(Note)
     def noteEdit(id, body, estimate, user):
-        note = Note()
-        note.id = id
+        note = services.ProjectService().noteGet(id)
+        print "Updating note", note.__dict__
+        col = services.ProjectService().columnGet(note.columnId)
+        board = services.ProjectService().boardGet(col.boardId)
         note.userId = user.id
         note.initials = user.initials
+        note.lastEditedUserId = user.id
         note.body = body
         note.estimate = estimate
-        Query.update(note)
+        services.ProjectService().noteUpdate(note)
         note = Query(Note).get(id)
+        board.lastChangedDate = datetime.utcnow()
+        Query.update(board)
+        return note
+
+    @params(t.Key)
+    @returns(Note)
+    def noteGet(id):
+        note = Query(Note).get(id)
+        if not Note:
+            raise NoteNotFoundException()
         return note
 
     @params(t.Key, t.Key, User)
     @returns(Note)
     def noteUpdateColumn(id, col, user):
-        note = Note()
-        note.id = id
+        note = services.ProjectService().noteGet(id)
+        column = services.ProjectService().columnGet(col)
+        board = services.ProjectService().boardGet(column.boardId)
         note.userId = user.id
         note.initials = user.initials
         note.columnId = col
         Query.update(note)
-        note = Query(Note).get(id)
+        board.lastChangedDate = datetime.utcnow()
+        Query.update(board)
         return note
 
     @params(t.Key, t.Key)
@@ -107,6 +130,10 @@ class ProjectService(Service):
         note.columnId = board.columns[0].id
         Query.update(note)
 
+        board.lastChangedDate = datetime.utcnow()
+        Query.update(board)
+
+        
     @params(t.Key)
     @returns(Column)
     def columnGet(id):
@@ -126,8 +153,19 @@ class ProjectService(Service):
 
     @params(t.Key)
     @returns(Board)
+    def boardGet(id):
+        board = Query(Board).get(id)
+        if not Board:
+            raise BoardNotFoundException()
+        return board
+
+
+    @params(t.Key)
+    @returns(Board)
     def boardGetFull(id):
         board = Query(Board).get(id)
+        if not Board:
+            raise BoardNotFoundException()
         loadAll(board)
         return board
 
@@ -138,6 +176,7 @@ class ProjectService(Service):
         board = Board()
         board.name = name
         board.projectId = projectId
+        board.lastChangedDate = datetime.utcnow()
         Query.save(board)
 
         for name in ["To do", "Doing", "Done"]:

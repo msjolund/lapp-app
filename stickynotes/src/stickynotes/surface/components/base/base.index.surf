@@ -26,20 +26,37 @@
                 {/if}
             </span>
             {if $user|isset()}
-                <a href="/" class="item project"><span>Default project</span></a>
+                {if $currentBoard|isset()}
+                    <a href="{urlaction board.view($currentBoard)}" class="item boards"><span>{$currentBoard.name}</span></a>
+                {else}
+                    <a href="/" class="item boards"><span>Boards</span></a>
+                {/if}
+
+                {*global $currentProject}
+                {if $currentProject|isset()}
+                    <a href="{urlaction project.view($currentProject)}" class="item project"><span>{$currentProject.name}</span></a>
+                {/if*}
             {/if}
         </div>
         {if $user|isset()}
-            <div id="project_dropdown">
+            <div id="boards_dropdown">
+                {if  $_globalContext.currentProject.boards|count() > 0}
                     <div class="draginfo">
-                        Drag here for more options
+                        Move to other boards
                     </div>
                     <ul>
                         {for $board in $_globalContext.currentProject.boards}
-                            <li><a href="{urlaction board.view($board)}" boardId="{$board.id}">{$board.name}</a></li>
+                            {if $currentBoard|notset() || $currentBoard.id != $board.id}
+                                <li class="boarditem"><a href="{urlaction board.view($board)}" boardId="{$board.id}">{$board.name}</a></li>
+                            {/if}
                         {/for}
-                        <li class="all"><a href="{urlaction project.view($_globalContext.currentProject)}">View all</a></li>
+                        <li class="all"><a href="{urlaction project.view($_globalContext.currentProject)}">View all boards </a></li>
                     </ul>
+
+                {else}
+                    <div class="empty">No boards yet</div>
+                {/if}
+
             </div>
         {/if}
 

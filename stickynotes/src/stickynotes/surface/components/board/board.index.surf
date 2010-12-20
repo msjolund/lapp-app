@@ -33,14 +33,14 @@
     </div>
 
 <div class="board clearfix">
-    <h3 class="marker">{$board.name}</h3>
+    <h3 class="marker">{$currentBoard.name}</h3>
     <div class="col_new add_form">
         {render board.nameform()}
-        <a class="btn_add marker" href="{urlaction board.column_add($board)}" title="Add column">+</a>
+        <a class="btn_add marker" href="{urlaction board.column_add($currentBoard)}" title="Add column">+</a>
     </div>
     <div id="board_columns" class="columns clearfix">
-        {$colWidth = 100.0/$board.columns|count()}
-        {for $col in $board.columns}
+        {$colWidth = 100.0/$currentBoard.columns|count()}
+        {for $col in $currentBoard.columns}
             <div class="col {if !$_hasNext}last{/if}" style="width: {$colWidth}%" colId="{$col.id}">
                 <div class="inner">
                     <h4><span class="estimate"><span class="number">-</span>h</span><span class="relative">{$col.name} <a title="Remove column" onclick="return confirm('Are you sure you want to remove the column \'{$col.name}\'and its notes?')" href="{urlaction board.column_remove($col)}" class="btn_remove">-</a></span></h4>

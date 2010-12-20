@@ -77,26 +77,26 @@ var board = {
             hoverClass: "hover"
         });
 
-        $("#project_dropdown").droppable(
+        $("#boards_dropdown").droppable(
         {
             tolerance: "pointer",
             over: function ()
             {
-                $("#project_dropdown").addClass("onhover");
+                $("#boards_dropdown").addClass("onhover");
                 $("#board_columns > .col").droppable("disable")
             },
             out: function ()
             {
-                $("#project_dropdown").removeClass("onhover");
+                $("#boards_dropdown").removeClass("onhover");
                 $("#board_columns > .col").droppable("enable")
             },
             drop: function (e, ui)
             {
                 $("#board_columns > .col").droppable("enable");
-                if ($(this).find("ul li a.draghover").length)
+                if ($(this).find("ul li.boarditem a.draghover").length)
                 {
                     // user were dropping on a list item inside the dropdown
-                    var link = $(this).find("ul li a.draghover");
+                    var link = $(this).find("ul li.boarditem a.draghover");
                     var boardId = link.attr("boardId");
                     setTimeout(function () {
                         // setTimeout needed because moveToBoard will remove the element being dragged, which will make draggable fail to trigger "end" event
@@ -105,7 +105,7 @@ var board = {
                 }
             }
         });
-        $("#project_dropdown ul li a").droppable(
+        $("#boards_dropdown ul li.boarditem a").droppable(
         {
             hoverClass: "draghover",
             tolerance: "pointer"
@@ -135,7 +135,12 @@ var board = {
 
     fixColumnHeights: function (boardEl)
     {
-
+        var highest = 0;
+        boardEl.find("> .columns > .col").each( function (i) {
+            if ($(this).outerHeight() > highest)
+                highest = $(this).outerHeight();
+        });
+        boardEl.find("> .columns > .col").css("min-height", highest+"px")
     }
 
 };

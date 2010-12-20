@@ -33,6 +33,11 @@
 
 .note.ui-state-disabled {
     opacity: 1;
+    filter:Alpha(Opacity=100);
+}
+.col.ui-state-disabled {
+    opacity: 1;
+    filter:Alpha(Opacity=100); 
 }
 
 .note .estimate {

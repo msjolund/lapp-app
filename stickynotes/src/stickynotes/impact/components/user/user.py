@@ -8,6 +8,7 @@ import simplejson
 class User(cc.user.User):
     email = t.String(maxLength=128, nullable=True)
     initials = t.String()
+    lastLogin = t.DateTime(nullable=True)
 
     @staticmethod
     def _getObjects(x, y, fieldValues):

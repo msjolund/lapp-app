@@ -22,6 +22,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     outline-width:0;
 }
 
+html {}
+
 body {
     line-height: 1;
     overflow-x: hidden;
@@ -207,7 +209,7 @@ h3 {
     position: relative;
 }
 
-#project_dropdown {
+#boards_dropdown {
     display: none;
     position: fixed;
     top: 38px;
@@ -219,52 +221,56 @@ h3 {
     border-top: none;
     border-bottom-width: 2px;
 }
-#project_dropdown.hover {
+#boards_dropdown.hover {
     display: block;
 }
-#project_dropdown ul li a {
+#boards_dropdown ul li a {
     padding: 10px;
     display: block;
     color: #4b4b4b;
     text-decoration: none;
     border-bottom: 1px solid #e4e4e4;
 }
-#project_dropdown ul li a:hover {
+#boards_dropdown ul li a:hover {
     background-color: #f4f4f4;
 }
-#project_dropdown ul li a.draghover {
+#boards_dropdown ul li a.draghover {
     background-color: #f0f0f0;
 }
-#project_dropdown ul li.all a {
+#boards_dropdown ul li.all a {
     text-align: center;
     font-size: 11px;
     font-weight: bold;
-    color: #888;
+    color: #4B4B4B;
     border: none;
+    background: #d7d7d7;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-#project_dropdown ul li.all a:hover {
-    color: #000;
+#boards_dropdown ul li.all a:hover {
+    color: #fff;
 }
-#project_dropdown ul li.all a:hover {
-    background: none;
+#boards_dropdown ul li.all a:hover {
+    background: #4B4B4B;
 }
 
-#project_dropdown.ondrag {
+#boards_dropdown.ondrag {
     display: block;
 }
-#project_dropdown.ondrag ul {
+#boards_dropdown.ondrag ul {
     display: none;
 }
-#project_dropdown.onhover ul {
+#boards_dropdown.onhover ul {
     display: block;
 }
 
-#project_dropdown .draginfo {
+#boards_dropdown .draginfo {
     display: none;
     color: #bbb;
     padding: 20px;
+    text-align: center;
 }
-#project_dropdown.ondrag .draginfo {
+#boards_dropdown.ondrag .draginfo {
     display: block;
 }
 

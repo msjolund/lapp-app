@@ -2,7 +2,7 @@ var note = {
     onDomReady: function() {
         note.initEdit($(".note.editable"));
 
-        $(document).bind("keydown", "ctrl+n", note.editNew )
+        $(document).bind("keydown", "ctrl+n", function (e) { e.preventDefault(); note.editNew} )
 
         this.addOrbitListener("onNoteMoved", note.onNoteMoved);
         this.addOrbitListener("onNoteEdited", note.onNoteEdited);
@@ -91,6 +91,7 @@ var note = {
     onEscape: function (e)
     {
         e.preventDefault();
+        console.debug("Esc pressed");
         note.cancelEdit($(this).closest(".note"))
     },
     onCtrlReturn: function (e)
@@ -105,7 +106,6 @@ var note = {
     },
 
     editNew: function (e) {
-        e.preventDefault();
         note.edit($("#note_new").closest(".note"));
     },
 
@@ -131,6 +131,7 @@ var note = {
         {
             note.create(noteEl, $(".board .col:first"));
             noteEl.closest(".board").trigger("change")
+            setTimeout(note.editNew, 200);
         }
         else
         {
@@ -194,22 +195,25 @@ var note = {
         var id = el.find("[name=id]").val();
         el.remove();
         $.getJSON("/note/move_to_board/NOTE/BOARD".replace(/NOTE/, id).replace(/BOARD/, boardId), function (response) {
-            console.debug("Move to board ok",$('.header:first .item.project'))
-            var projectBtn = $('.header:first .item.project').qtip({
+            var projectBtn = $('.header:first .item.boards').qtip({
                 position: {
                     corner: {
                         target: 'bottomMiddle',
                         tooltip: 'topMiddle'
                     }
                 },
-                content: 'Note move to ' + boardName,
-                show: "tooltip",
-                hide: "tooltipHide",
+                content: 'Note moved to ' + boardName,
+                show: {
+                    when: false,
+                    ready: true
+                },
+                hide: "tooltipHide", // Don't specify a hide event
+
                 style: {
                     name: 'dark',
                     tip: 'topMiddle'
                 }
-            }).trigger('tooltip');
+            });
             setTimeout(function () { projectBtn.trigger("tooltipHide")}, 3000)
         });
     },
@@ -264,11 +268,14 @@ var note = {
     onDragStart: function (e, ui)
     {
         note.finish(this);
-        $("#project_dropdown").addClass("ondrag");
+        if ($(e.target).closest(".stack").length == 0) // if this isnt a new note
+            $("#boards_dropdown").addClass("ondrag");
     },
     onDragEnd: function (e, ui)
     {
-        $("#project_dropdown").removeClass("ondrag");
+        $("#boards_dropdown").removeClass("ondrag");
+        $("#boards_dropdown").removeClass("onhover");
+        $("#boards_dropdown .draghover").removeClass("draghover");
     },
 
     selectedNote: null,
@@ -297,8 +304,12 @@ var note = {
 
     cancelEdit: function (noteEl)
     {
-        var id = noteEl.find("input[name=id]").val();
-        $S("note_" + id).refresh();
+        var surfaceId, id = noteEl.find("input[name=id]").val();
+        if (id)
+            surfaceId = "note_" + id;
+        else
+            surfaceId = "note_new";
+        $S(surfaceId).refresh();
         noteEl.removeClass("edit").draggable("enable").unbind('keydown');
     },
 

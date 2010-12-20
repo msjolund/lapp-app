@@ -15,8 +15,8 @@ class BoardController(ApplicationController):
         print "INITATING"
         if "user" not in self.session:
             return self.redirect("/")
-        self.context.board = services.ProjectService().boardGetFull(int(id))
-        loadAll(self.context.board)
+        self.context.currentBoard = services.ProjectService().boardGetFull(int(id))
+        loadAll(self.context.currentBoard)
         self.globalContext.boardId = id
         self.orbitAddChannel("board_"+id)
         return self.render('board.index')
