@@ -189,12 +189,28 @@ var note = {
         }
     },
 
-    moveToBoard: function (el, boardId)
+    moveToBoard: function (el, boardId, boardName)
     {
         var id = el.find("[name=id]").val();
         el.remove();
         $.getJSON("/note/move_to_board/NOTE/BOARD".replace(/NOTE/, id).replace(/BOARD/, boardId), function (response) {
-            console.debug("Move to board ok")
+            console.debug("Move to board ok",$('.header:first .item.project'))
+            var projectBtn = $('.header:first .item.project').qtip({
+                position: {
+                    corner: {
+                        target: 'bottomMiddle',
+                        tooltip: 'topMiddle'
+                    }
+                },
+                content: 'Note move to ' + boardName,
+                show: "tooltip",
+                hide: "tooltipHide",
+                style: {
+                    name: 'dark',
+                    tip: 'topMiddle'
+                }
+            }).trigger('tooltip');
+            setTimeout(function () { projectBtn.trigger("tooltipHide")}, 3000)
         });
     },
 

@@ -33,7 +33,7 @@ class NoteController(ApplicationController):
         note.estimate = int(self.post.get("estimate", 0))
         note.lastEditedUserId = self.context.user.id
         note.initials = self.context.user.initials
-        note.projectId = self.globalContext.currentProjectId
+        note.projectId = self.globalContext.currentProject.id
         note = services.ProjectService().noteCreate(note)
         Orbit.sendToChannel("board_%s" % col.boardId, "onNoteCreated", {"note": note})
         return SurfaceResponse(jsonEncode({"note": note}))

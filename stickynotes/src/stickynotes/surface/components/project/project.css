@@ -50,12 +50,18 @@ h2 {
     display: none;
 }
 
+.boards .board_form .cancel a {
+    color: blue;
+}
+.boards .board_form .cancel {
+    padding-left: 5px;
+}
+
 .board_form input[type=text] {
-    width: 300px;
+    width: 200px;
 }
 
 .board_form input[type=submit] {
-    float: right;
     padding: 3px;
 }
 

@@ -3,5 +3,6 @@
         <form action="{urlaction project.board_add({"id": 2772296566596173913})}" method="post">
             <input type="text" name="name" value="New board" />
             <input type="submit" value="Add" />
+            <span class="cancel"> or <a onclick="$(this).closest('.board_form').hide().closest('.board_list').find('a.add').show(); return false;" href="#cancel">Cancel</a></span>
         </form>
 </li>

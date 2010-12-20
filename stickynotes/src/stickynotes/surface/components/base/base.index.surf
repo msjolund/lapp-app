@@ -36,7 +36,7 @@
                     </div>
                     <ul>
                         {for $board in $_globalContext.currentProject.boards}
-                            <li><a href="{urlaction board.view($board)}" boardId="{$board.id}"'>{$board.name}</a></li>
+                            <li><a href="{urlaction board.view($board)}" boardId="{$board.id}">{$board.name}</a></li>
                         {/for}
                         <li class="all"><a href="{urlaction project.view($_globalContext.currentProject)}">View all</a></li>
                     </ul>

@@ -96,10 +96,11 @@ var board = {
                 if ($(this).find("ul li a.draghover").length)
                 {
                     // user were dropping on a list item inside the dropdown
-                    var boardId = $(this).find("ul li a.draghover").attr("boardId");
+                    var link = $(this).find("ul li a.draghover");
+                    var boardId = link.attr("boardId");
                     setTimeout(function () {
                         // setTimeout needed because moveToBoard will remove the element being dragged, which will make draggable fail to trigger "end" event
-                        note.moveToBoard(ui.draggable, boardId);
+                        note.moveToBoard(ui.draggable, boardId, link.text());
                     }, 40)
                 }
             }
